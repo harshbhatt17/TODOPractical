@@ -1,0 +1,48 @@
+﻿@model DAL.Model.Tbl_ToDo
+
+@{
+    ViewData["Title"] = "AddUpdateTodo";
+}
+<style>
+    .form-control {
+        width: 50%;
+    }
+</style>
+<div class="container">
+    <form class="box-form" action="@Url.Action("AddUpdateTodo","Home")" method="post">
+        @{ var btnName = Model.Id > 0 ? "Update" : "Add";}
+        <div>
+            <h2>@btnName Todo</h2>
+        </div>
+        <div>
+            <div class="form-group">
+                <label for="Title">Title:</label>
+                <input type="text" name="Title" id="Title" value="@Model.Title" class="form-control">
+                @Html.ValidationMessageFor(x => x.Title)
+            </div>
+
+            <div class="form-group">
+                <label for="Description">Description:</label>
+                <input type="text" name="Description" id="Description" value="@Model.Description" class="form-control">
+                @Html.ValidationMessageFor(x => x.Description)
+
+            </div>
+
+
+            @if (Model.Id > 0)
+            {
+                <div class="form-group">
+                    <label for="Description">Completed:</label>
+                    @Html.CheckBoxFor(m => m.IsCompleted)
+                </div>
+
+            }
+
+            <div class="box-btn-login">
+
+                <button class="btn btn-success" type="submit" value="enter">@btnName</button>
+            </div>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,58 @@
+﻿@model List<DAL.Model.Tbl_ToDo>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link href="~/css/ItemAddUpdate.css" rel="stylesheet" />
+@*<div class="text-center">*@
+<div>
+    <h2>TODO List</h2>
+    <div class="css-table">
+        <div class="css-table">
+            <div class="css-table-header">
+                <div>SerialNumber</div>
+                <div>Title</div>
+                <div>Description</div>
+                <div>Completed</div>
+                <div>Action</div>
+                <div style="background-color: white;"><a class="btn btn-info" href="@Url.Action("AddUpdateTodo","Home")"><span>Add new</span></a></div>
+            </div>
+
+            <div class="css-table-body">
+                @foreach (var item in Model)
+                {
+                <div class="css-table-row">
+                    <div>@item.SerialNumber</div>
+                    <div>@item.Title</div>
+                    <div>@item.Description</div>
+                    @{var Status = item.IsCompleted == true ? "Completed" : "Incomplete";}
+                    <div>@Status</div>
+                    <div style="padding-bottom: 10px;">
+                    <button class="btn btn-danger btn-xs" onclick="Delete(@item.Id)">Delete</button>
+                    <button class="btn btn-danger btn-xs" onclick="Edit(@item.Id)">Edit</button>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Delete(id){
+        debugger
+        $.ajax({
+            type: "post",
+            url: "@Url.Action("Delete","Home")",
+            data: { 'id': id},
+            success: function (res) {
+                debugger
+                if (res == true || res.success == true) {
+                    window.location.reload(true);
+                }
+            }
+        })
+    }
+    function Edit(id) {
+        window.location.href = 'home/AddUpdateTodo/' + id;
+    }
+</script>
